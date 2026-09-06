@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+MUJOCO_LOG.TXT
+
+# training artefacts
+ckpt/
+runs/
+runs2/
+preview/
+logs/
+data/
+data_*/
+*.pt
+*.npz
+*.mp4
+
+# renderer scratch
+.mj_png_cache/
+mujoco_menagerie/

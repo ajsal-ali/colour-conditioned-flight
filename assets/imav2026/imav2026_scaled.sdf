@@ -1,0 +1,732 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.9">
+  <world name="imav2026_scaled">
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>47.397742</latitude_deg>
+      <longitude_deg>8.545594</longitude_deg>
+      <elevation>488.0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+
+    <atmosphere type="adiabatic" />
+    <physics name="1ms" type="dart">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+<plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact" />
+
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu" />
+    <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure" />
+    <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer" />
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat" />
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.15 0.15 0.15 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <gravity>0 0 -9.81</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+
+    <light name="hall_sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0.0 0.0 22.0 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>0.1 0.1 -1</direction>
+    </light>
+
+    <model name="arena_floor">
+      <static>true</static><pose>0.0 0.0 0.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>15.4 30.8 0.044</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>15.4 30.8 0.044</size></box></geometry>
+          <material>
+            <ambient>0.80 0.06 0.06 1</ambient>
+            <diffuse>0.80 0.06 0.06 1</diffuse>
+            <pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="strip_L">
+      <static>true</static><pose>-4.4 -3.85 0.0242 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>1.32 23.1 0.0022</size></box></geometry></collision>
+        <visual name="v">
+          <geometry>
+            <mesh>
+              <uri>model://materials/meshes/strip_narrow.obj</uri>
+              <scale>2.2 2.2 2.2</scale> </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/flower_wallpaper.jpg</albedo_map>
+                <roughness>0.8</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="strip_C">
+      <static>true</static><pose>0.0 -3.85 0.0242 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>2.64 23.1 0.0022</size></box></geometry></collision>
+        <visual name="v">
+          <geometry>
+            <mesh>
+              <uri>model://materials/meshes/strip_wide.obj</uri>
+              <scale>2.2 2.2 2.2</scale> </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/flower_wallpaper.jpg</albedo_map>
+                <roughness>0.8</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="strip_R">
+      <static>true</static><pose>4.4 -3.85 0.0242 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>1.32 23.1 0.0022</size></box></geometry></collision>
+        <visual name="v">
+          <geometry>
+            <mesh>
+              <uri>model://materials/meshes/strip_narrow.obj</uri>
+              <scale>2.2 2.2 2.2</scale> </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/flower_wallpaper.jpg</albedo_map>
+                <roughness>0.8</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="room_floor"><static>true</static><pose>-4.95 12.65 0.022 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>5.5 5.5 0.044</size></box></geometry></collision><visual name="v"><geometry><box><size>5.5 5.5 0.044</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_N"><static>true</static><pose>-4.95 15.4 2.75 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>5.5 0.088 5.5</size></box></geometry></collision><visual name="v"><geometry><box><size>5.5 0.088 5.5</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_W"><static>true</static><pose>-7.7 12.65 2.75 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.088 5.5 5.5</size></box></geometry></collision><visual name="v"><geometry><box><size>0.088 5.5 5.5</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_E"><static>true</static><pose>-2.2 12.65 2.75 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.088 5.5 5.5</size></box></geometry></collision><visual name="v"><geometry><box><size>0.088 5.5 5.5</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_ceil"><static>true</static><pose>-4.95 12.65 5.544 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>5.5 5.5 0.088</size></box></geometry></collision><visual name="v"><geometry><box><size>5.5 5.5 0.088</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="room_S_bot"><static>true</static><pose>-4.95 9.9 1.617 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>5.5 0.088 3.234</size></box></geometry></collision><visual name="v"><geometry><box><size>5.5 0.088 3.234</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="room_S_top"><static>true</static><pose>-4.95 9.9 4.983 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>5.5 0.088 1.034</size></box></geometry></collision><visual name="v"><geometry><box><size>5.5 0.088 1.034</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="room_S_seg_L"><static>true</static><pose>-7.073 9.9 3.85 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.254 0.088 1.232</size></box></geometry></collision><visual name="v"><geometry><box><size>1.254 0.088 1.232</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_S_seg_M"><static>true</static><pose>-4.4 9.9 3.85 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.188 0.088 1.232</size></box></geometry></collision><visual name="v"><geometry><box><size>1.188 0.088 1.232</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_S_seg_R"><static>true</static><pose>-2.497 9.9 3.85 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.594 0.088 1.232</size></box></geometry></collision><visual name="v"><geometry><box><size>0.594 0.088 1.232</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_S_seg_above_red"><static>true</static><pose>-3.3 9.9 4.356 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.088 0.22</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.088 0.22</size></box></geometry><material><ambient>0.60 0.50 0.38 1</ambient><diffuse>0.60 0.50 0.38 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+
+    <model name="room_blue_top"><static>true</static><pose>-5.72 9.9 4.433 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.066</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_blue_bot"><static>true</static><pose>-5.72 9.9 3.267 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.066</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_blue_L"><static>true</static><pose>-6.413 9.9 3.85 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 1.1</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 1.1</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_blue_R"><static>true</static><pose>-5.027 9.9 3.85 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 1.1</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 1.1</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="room_red_top"><static>true</static><pose>-3.3 9.9 4.213 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.066</size></box></geometry><material><ambient>1.0 0.0 0.0 1</ambient><diffuse>1.0 0.0 0.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_red_bot"><static>true</static><pose>-3.3 9.9 3.267 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.066</size></box></geometry><material><ambient>1.0 0.0 0.0 1</ambient><diffuse>1.0 0.0 0.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_red_L"><static>true</static><pose>-3.773 9.9 3.74 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 0.88</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 0.88</size></box></geometry><material><ambient>1.0 0.0 0.0 1</ambient><diffuse>1.0 0.0 0.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="room_red_R"><static>true</static><pose>-2.827 9.9 3.74 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 0.88</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 0.88</size></box></geometry><material><ambient>1.0 0.0 0.0 1</ambient><diffuse>1.0 0.0 0.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+
+    <model name="obs_wall_leg_L"><static>true</static><pose>-1.65 3.3 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_foot_L"><static>true</static><pose>-1.65 3.3 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.55 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.55 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_leg_R"><static>true</static><pose>1.65 3.3 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_foot_R"><static>true</static><pose>1.65 3.3 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.55 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.55 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="obs_wall_bd_L"><static>true</static><pose>-1.518 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.264 0.11 1.54</size></box></geometry></collision><visual name="v"><geometry><box><size>0.264 0.11 1.54</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_bd_M"><static>true</static><pose>0.22 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.308 0.11 1.54</size></box></geometry></collision><visual name="v"><geometry><box><size>0.308 0.11 1.54</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_bd_R"><static>true</static><pose>1.518 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.264 0.11 1.54</size></box></geometry></collision><visual name="v"><geometry><box><size>0.264 0.11 1.54</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_bd_B_blue"><static>true</static><pose>-0.66 3.3 2.717 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.154</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.154</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_bd_T_blue"><static>true</static><pose>-0.66 3.3 4.103 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.154</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.154</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_bd_B_red"><static>true</static><pose>0.88 3.3 2.772 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.264</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.264</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_bd_T_red"><static>true</static><pose>0.88 3.3 4.048 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.264</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.264</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="obs_wall_blue_top"><static>true</static><pose>-0.66 3.3 3.993 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.066</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_blue_bot"><static>true</static><pose>-0.66 3.3 2.827 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.066</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_blue_L"><static>true</static><pose>-1.353 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 1.1</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 1.1</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_blue_R"><static>true</static><pose>0.033 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 1.1</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 1.1</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="obs_wall_red_top"><static>true</static><pose>0.88 3.3 3.883 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.066</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_red_bot"><static>true</static><pose>0.88 3.3 2.937 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.066</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_red_L"><static>true</static><pose>0.407 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 0.88</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 0.88</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="obs_wall_red_R"><static>true</static><pose>1.353 3.3 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 0.88</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 0.88</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="exit_wall_leg_L"><static>true</static><pose>-1.65 -12.1 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_foot_L"><static>true</static><pose>-1.65 -12.1 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.55 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.55 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_leg_R"><static>true</static><pose>1.65 -12.1 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>4.4</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_foot_R"><static>true</static><pose>1.65 -12.1 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.55 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.55 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="exit_wall_bd_L"><static>true</static><pose>-1.518 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.264 0.11 1.54</size></box></geometry></collision><visual name="v"><geometry><box><size>0.264 0.11 1.54</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_bd_M"><static>true</static><pose>0.22 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.308 0.11 1.54</size></box></geometry></collision><visual name="v"><geometry><box><size>0.308 0.11 1.54</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_bd_R"><static>true</static><pose>1.518 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.264 0.11 1.54</size></box></geometry></collision><visual name="v"><geometry><box><size>0.264 0.11 1.54</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_bd_B_blue"><static>true</static><pose>-0.66 -12.1 2.717 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.154</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.154</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_bd_T_blue"><static>true</static><pose>-0.66 -12.1 4.103 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.154</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.154</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_bd_B_red"><static>true</static><pose>0.88 -12.1 2.772 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.264</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.264</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_bd_T_red"><static>true</static><pose>0.88 -12.1 4.048 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.264</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.264</size></box></geometry><material><ambient>0.72 0.60 0.45 1</ambient><diffuse>0.72 0.60 0.45 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="exit_wall_blue_top"><static>true</static><pose>-0.66 -12.1 3.993 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.066</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_blue_bot"><static>true</static><pose>-0.66 -12.1 2.827 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.452 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.452 0.11 0.066</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_blue_L"><static>true</static><pose>-1.353 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 1.1</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 1.1</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_blue_R"><static>true</static><pose>0.033 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 1.1</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 1.1</size></box></geometry><material><ambient>0.0 0.3 1.0 1</ambient><diffuse>0.0 0.3 1.0 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="exit_wall_red_top"><static>true</static><pose>0.88 -12.1 3.883 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.066</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_red_bot"><static>true</static><pose>0.88 -12.1 2.937 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>1.012 0.11 0.066</size></box></geometry></collision><visual name="v"><geometry><box><size>1.012 0.11 0.066</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_red_L"><static>true</static><pose>0.407 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 0.88</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 0.88</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="exit_wall_red_R"><static>true</static><pose>1.353 -12.1 3.41 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.066 0.11 0.88</size></box></geometry></collision><visual name="v"><geometry><box><size>0.066 0.11 0.88</size></box></geometry><material><ambient>1.0 0.05 0.05 1</ambient><diffuse>1.0 0.05 0.05 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="red_post_L"><static>true</static><pose>-1.65 -9.9 2.255 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>4.51</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>4.51</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="red_post_R"><static>true</static><pose>1.65 -9.9 2.255 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>4.51</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>4.51</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="red_foot_L"><static>true</static><pose>-1.65 -9.9 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.44 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.44 0.264 0.11</size></box></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="red_foot_R"><static>true</static><pose>1.65 -9.9 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.44 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.44 0.264 0.11</size></box></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="red_bar"><static>true</static><pose>0.0 -9.9 4.356 0 1.5708 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.044</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.044</radius><length>4.4</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+
+    <model name="blue_post_L1"><static>true</static><pose>-1.65 -7.7 1.32 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_post_R1"><static>true</static><pose>1.65 -7.7 1.32 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_foot_L1"><static>true</static><pose>-1.65 -7.7 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.44 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.44 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_foot_R1"><static>true</static><pose>1.65 -7.7 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.44 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.44 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_bar1"><static>true</static><pose>0.0 -7.7 0.88 0 1.5708 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0396</radius><length>3.3</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0396</radius><length>3.3</length></cylinder></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="blue_post_L2"><static>true</static><pose>-1.65 -5.5 1.32 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_post_R2"><static>true</static><pose>1.65 -5.5 1.32 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.055</radius><length>2.64</length></cylinder></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_foot_L2"><static>true</static><pose>-1.65 -5.5 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.44 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.44 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_foot_R2"><static>true</static><pose>1.65 -5.5 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.44 0.264 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.44 0.264 0.11</size></box></geometry><material><ambient>0.50 0.35 0.22 1</ambient><diffuse>0.50 0.35 0.22 1</diffuse><pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="blue_bar2"><static>true</static><pose>0.0 -5.5 0.88 0 1.5708 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0396</radius><length>3.3</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0396</radius><length>3.3</length></cylinder></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+
+    <model name="tube_A_post"><static>true</static><pose>0.0 0.0 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0495</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0495</radius><length>4.4</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="tube_A_foot"><static>true</static><pose>0.0 0.0 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.33 0.33 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.33 0.33 0.11</size></box></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="tube_B_post_L"><static>true</static><pose>-1.1 -2.2 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0495</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0495</radius><length>4.4</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="tube_B_post_R"><static>true</static><pose>1.1 -2.2 2.2 0 0 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0495</radius><length>4.4</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0495</radius><length>4.4</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="tube_B_horiz_lo"><static>true</static><pose>0.0 -2.2 1.0142 0 1.5708 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0495</radius><length>2.2</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0495</radius><length>2.2</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="tube_B_diag"><static>true</static><pose>0.0 -2.2 3.1284 0 -0.7854 0</pose><link name="link"><collision name="col"><geometry><cylinder><radius>0.0495</radius><length>3.1108</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.0495</radius><length>3.1108</length></cylinder></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="tube_B_foot_L"><static>true</static><pose>-1.1 -2.2 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.33 0.33 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.33 0.33 0.11</size></box></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="tube_B_foot_R"><static>true</static><pose>1.1 -2.2 0.055 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.33 0.33 0.11</size></box></geometry></collision><visual name="v"><geometry><box><size>0.33 0.33 0.11</size></box></geometry><material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    
+    <model name="box_blue_floor"><static>true</static><pose>0.8844 7.48 0.022 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.6116 0.022</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.6116 0.022</size></box></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_blue_wallN"><static>true</static><pose>0.8844 7.7858 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_blue_wallS"><static>true</static><pose>0.8844 7.1742 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_blue_wallE"><static>true</static><pose>1.32 7.48 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_blue_wallW"><static>true</static><pose>0.4488 7.48 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry><material><ambient>0.1 0.2 0.8 1</ambient><diffuse>0.1 0.2 0.8 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+    <model name="box_red_floor"><static>true</static><pose>-0.4356 6.38 0.022 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.6116 0.022</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.6116 0.022</size></box></geometry><material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_red_wallN"><static>true</static><pose>-0.4356 6.6858 0.1452 0 0 0</pose>
+      <link name="link">
+        <collision name="v_col"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry><material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+        <collision name="border_col"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.8712 0.022 0.011</size></box></geometry></collision>
+        <visual name="border"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.8712 0.022 0.011</size></box></geometry><material><ambient>0.9 0.9 0.1 1</ambient><diffuse>0.9 0.9 0.1 1</diffuse><emissive>0.3 0.3 0.0 1</emissive><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+      </link>
+    </model>
+    <model name="box_red_wallS"><static>true</static><pose>-0.4356 6.0742 0.1452 0 0 0</pose>
+      <link name="link">
+        <collision name="v_col"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry><material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+        <collision name="border_col"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.8712 0.022 0.011</size></box></geometry></collision>
+        <visual name="border"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.8712 0.022 0.011</size></box></geometry><material><ambient>0.9 0.9 0.1 1</ambient><diffuse>0.9 0.9 0.1 1</diffuse><emissive>0.3 0.3 0.0 1</emissive><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+      </link>
+    </model>
+    <model name="box_red_wallE"><static>true</static><pose>0.0 6.38 0.1452 0 0 0</pose>
+      <link name="link">
+        <collision name="v_col"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry><material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+        <collision name="border_col"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.022 0.6116 0.011</size></box></geometry></collision>
+        <visual name="border"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.022 0.6116 0.011</size></box></geometry><material><ambient>0.9 0.9 0.1 1</ambient><diffuse>0.9 0.9 0.1 1</diffuse><emissive>0.3 0.3 0.0 1</emissive><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+      </link>
+    </model>
+    <model name="box_red_wallW"><static>true</static><pose>-0.8712 6.38 0.1452 0 0 0</pose>
+      <link name="link">
+        <collision name="v_col"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry><material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+        <collision name="border_col"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.022 0.6116 0.011</size></box></geometry></collision>
+        <visual name="border"><pose>0.0 0.0 0.1452 0 0 0</pose><geometry><box><size>0.022 0.6116 0.011</size></box></geometry><material><ambient>0.9 0.9 0.1 1</ambient><diffuse>0.9 0.9 0.1 1</diffuse><emissive>0.3 0.3 0.0 1</emissive><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual>
+      </link>
+    </model>
+
+    <model name="box_purple_floor"><static>true</static><pose>1.7556 5.28 0.022 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.6116 0.022</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.6116 0.022</size></box></geometry><material><ambient>0.6 0.1 0.6 1</ambient><diffuse>0.6 0.1 0.6 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_purple_wallN"><static>true</static><pose>1.7556 5.5858 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry><material><ambient>0.6 0.1 0.6 1</ambient><diffuse>0.6 0.1 0.6 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_purple_wallS"><static>true</static><pose>1.7556 4.9742 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.8712 0.022 0.2904</size></box></geometry><material><ambient>0.6 0.1 0.6 1</ambient><diffuse>0.6 0.1 0.6 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_purple_wallE"><static>true</static><pose>2.1912 5.28 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry><material><ambient>0.6 0.1 0.6 1</ambient><diffuse>0.6 0.1 0.6 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+    <model name="box_purple_wallW"><static>true</static><pose>1.32 5.28 0.1452 0 0 0</pose><link name="link"><collision name="col"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry></collision><visual name="v"><geometry><box><size>0.022 0.6116 0.2904</size></box></geometry><material><ambient>0.6 0.1 0.6 1</ambient><diffuse>0.6 0.1 0.6 1</diffuse><pbr><metal><roughness>0.5</roughness><metalness>0.0</metalness></metal></pbr></material></visual></link></model>
+
+
+    <model name="turbine_assembly">
+      <static>true</static>
+      <pose>4.51 13.2 0.0 0 0 0</pose> 
+
+      <link name="link">
+        
+        <visual name="backboard">
+          <pose>0.0 0.0 2.75 0 0 0</pose>
+          <geometry><box><size>1.98 0.044 5.5</size></box></geometry>
+          <material><ambient>0.0 0.2 0.85 1</ambient><diffuse>0.0 0.2 0.85 1</diffuse></material>
+        </visual>
+        <collision name="backboard_col">
+          <pose>0.0 0.0 2.75 0 0 0</pose>
+          <geometry><box><size>1.98 0.044 5.5</size></box></geometry>
+        </collision>
+
+        <collision name="support_base_L_col">
+          <pose>-0.88 1.0813 0.022 0 0 0</pose>
+          <geometry><box><size>0.088 2.1626 0.044</size></box></geometry>
+        </collision>
+        <visual name="support_base_L">
+          <pose>-0.88 1.0813 0.022 0 0 0</pose>
+          <geometry><box><size>0.088 2.1626 0.044</size></box></geometry>
+          <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+        </visual>
+
+        <collision name="support_base_R_col">
+          <pose>0.88 1.0813 0.022 0 0 0</pose>
+          <geometry><box><size>0.088 2.1626 0.044</size></box></geometry>
+        </collision>
+        <visual name="support_base_R">
+          <pose>0.88 1.0813 0.022 0 0 0</pose>
+          <geometry><box><size>0.088 2.1626 0.044</size></box></geometry>
+          <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+        </visual>
+
+        <collision name="support_diag_L_col">
+          <pose>-0.88 0.979 0.913 0.8254 0 0</pose>
+          <geometry><box><size>0.088 0.088 2.64</size></box></geometry>
+        </collision>
+        <visual name="support_diag_L">
+          <pose>-0.88 0.979 0.913 0.8254 0 0</pose>
+          <geometry><box><size>0.088 0.088 2.64</size></box></geometry>
+          <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+        </visual>
+
+        <collision name="support_diag_R_col">
+          <pose>0.88 0.979 0.913 0.8254 0 0</pose>
+          <geometry><box><size>0.088 0.088 2.64</size></box></geometry>
+        </collision>
+        <visual name="support_diag_R">
+          <pose>0.88 0.979 0.913 0.8254 0 0</pose>
+          <geometry><box><size>0.088 0.088 2.64</size></box></geometry>
+          <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
+        </visual>
+
+        <collision name="hub_col">
+          <pose>0.0 -0.1969 3.19 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.121</radius><length>0.3498</length></cylinder></geometry>
+        </collision>
+        <visual name="hub">
+          <pose>0.0 -0.1969 3.19 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.121</radius><length>0.3498</length></cylinder></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material>
+        </visual>
+
+        <visual name="blade">
+          <pose>0.0 -0.3938 3.19 0 0.7854 0</pose>
+          <geometry><box><size>0.176 0.044 3.74</size></box></geometry>
+          <material><ambient>0.97 0.97 0.97 1</ambient><diffuse>0.97 0.97 0.97 1</diffuse></material>
+        </visual>
+        <collision name="blade_col">
+          <pose>0.0 -0.3938 3.19 0 -0.7854 0</pose>
+          <geometry><box><size>0.176 0.044 1.98</size></box></geometry>
+        </collision>
+
+        <collision name="copper_disc_1_col">
+          <pose>0.5434 -0.4224 3.7334 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+        </collision>
+        <visual name="copper_disc_1">
+          <pose>0.5434 -0.4224 3.7334 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+          <material><ambient>0.85 0.55 0.20 1</ambient><diffuse>0.85 0.55 0.20 1</diffuse></material>
+        </visual>
+
+        <collision name="copper_disc_2_col">
+          <pose>1.2445 -0.4224 4.4345 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+        </collision>
+        <visual name="copper_disc_2">
+          <pose>1.2445 -0.4224 4.4345 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+          <material><ambient>0.85 0.55 0.20 1</ambient><diffuse>0.85 0.55 0.20 1</diffuse></material>
+        </visual>
+
+        <collision name="copper_disc_3_col">
+          <pose>-0.5434 -0.4224 2.6466 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+        </collision>
+        <visual name="copper_disc_3">
+          <pose>-0.5434 -0.4224 2.6466 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+          <material><ambient>0.85 0.55 0.20 1</ambient><diffuse>0.85 0.55 0.20 1</diffuse></material>
+        </visual>
+
+        <collision name="copper_disc_4_col">
+          <pose>-1.2445 -0.4224 1.9455 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+        </collision>
+        <visual name="copper_disc_4">
+          <pose>-1.2445 -0.4224 1.9455 1.5708 -0.7854 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+          <material><ambient>0.85 0.55 0.20 1</ambient><diffuse>0.85 0.55 0.20 1</diffuse></material>
+        </visual>
+
+      </link>
+    </model>
+
+
+    <model name="ring_board_assembly">
+      <static>true</static>
+      <pose>1.1 13.2 0.0 0 0 0</pose> 
+
+      <link name="link">
+        
+        <collision name="col">
+          <pose>0.0 0.022 1.32 0 0 0</pose>
+          <geometry><box><size>1.32 0.044 2.64</size></box></geometry>
+        </collision>
+        <visual name="board_wood">
+          <pose>0.0 0.022 1.32 0 0 0</pose>
+          <geometry><box><size>1.32 0.044 2.64</size></box></geometry>
+          <material>
+            <ambient>0.65 0.55 0.42 1</ambient><diffuse>0.65 0.55 0.42 1</diffuse>
+            <pbr><metal><roughness>0.8</roughness><metalness>0.0</metalness></metal></pbr>
+          </material>
+        </visual>
+
+        <collision name="rear_base_col">
+          <pose>0.0 0.6193 0.022 0 0 0</pose>
+          <geometry><box><size>1.32 1.1506 0.044</size></box></geometry>
+        </collision>
+        <visual name="rear_base">
+          <pose>0.0 0.6193 0.022 0 0 0</pose>
+          <geometry><box><size>1.32 1.1506 0.044</size></box></geometry>
+          <material><ambient>0.65 0.55 0.42 1</ambient><diffuse>0.65 0.55 0.42 1</diffuse></material>
+        </visual>
+
+        <collision name="strut_L_col">
+          <pose>-0.55 0.6193 0.6193 0.7854 0 0</pose>
+          <geometry><box><size>0.044 0.044 1.716</size></box></geometry>
+        </collision>
+        <visual name="strut_L">
+          <pose>-0.55 0.6193 0.6193 0.7854 0 0</pose>
+          <geometry><box><size>0.044 0.044 1.716</size></box></geometry>
+          <material><ambient>0.65 0.55 0.42 1</ambient><diffuse>0.65 0.55 0.42 1</diffuse></material>
+        </visual>
+
+        <collision name="strut_R_col">
+          <pose>0.55 0.6193 0.6193 0.7854 0 0</pose>
+          <geometry><box><size>0.044 0.044 1.716</size></box></geometry>
+        </collision>
+        <visual name="strut_R">
+          <pose>0.55 0.6193 0.6193 0.7854 0 0</pose>
+          <geometry><box><size>0.044 0.044 1.716</size></box></geometry>
+          <material><ambient>0.65 0.55 0.42 1</ambient><diffuse>0.65 0.55 0.42 1</diffuse></material>
+        </visual>
+
+        <collision name="pedestal_base_col">
+          <pose>0.0 -0.55 0.022 0 0 0</pose>
+          <geometry><box><size>0.33 0.22 0.044</size></box></geometry>
+        </collision>
+        <visual name="pedestal_base">
+          <pose>0.0 -0.55 0.022 0 0 0</pose>
+          <geometry><box><size>0.33 0.22 0.044</size></box></geometry>
+          <material><ambient>0.55 0.45 0.33 1</ambient><diffuse>0.55 0.45 0.33 1</diffuse></material>
+        </visual>
+
+        <collision name="front_post_col">
+          <pose>0.0 -0.55 0.517 0 0 0</pose> 
+          <geometry><box><size>0.132 0.088 0.88</size></box></geometry>
+        </collision>
+        <visual name="front_post">
+          <pose>0.0 -0.55 0.517 0 0 0</pose> 
+          <geometry><box><size>0.132 0.088 0.88</size></box></geometry>
+          <material><ambient>0.55 0.45 0.33 1</ambient><diffuse>0.55 0.45 0.33 1</diffuse></material>
+        </visual>
+
+        <collision name="ring_pin_col">
+          <pose>0.0 -0.55 0.9834 0 0 0</pose>
+          <geometry><cylinder><radius>0.011</radius><length>0.055</length></cylinder></geometry>
+        </collision>
+        <visual name="ring_pin">
+          <pose>0.0 -0.55 0.9834 0 0 0</pose>
+          <geometry><cylinder><radius>0.011</radius><length>0.055</length></cylinder></geometry>
+          <material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material>
+        </visual>
+
+        <collision name="copper_ring_col">
+          <pose>0.0 -0.55 1.1 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+        </collision>
+        <visual name="copper_ring">
+          <pose>0.0 -0.55 1.1 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.088</radius><length>0.0132</length></cylinder></geometry>
+          <material><ambient>0.85 0.55 0.20 1</ambient><diffuse>0.85 0.55 0.20 1</diffuse></material>
+        </visual>
+
+        <collision name="aruco_id4_col">
+          <pose>0.0 -0.0044 1.1 0 0 0</pose>
+          <geometry><box><size>0.22 0.0022 0.22</size></box></geometry>
+        </collision>
+        <visual name="aruco_id4">
+          <pose>0.0 -0.0044 1.1 0 0 0</pose>
+          <geometry><box><size>0.22 0.0022 0.22</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr><metal><albedo_map>model://materials/textures/aruco_marker_4.jpg</albedo_map><roughness>0.5</roughness></metal></pbr>
+          </material>
+        </visual>
+
+        <collision name="aruco_id5_col">
+          <pose>0.0 -0.0044 1.54 0 0 0</pose>
+          <geometry><box><size>0.22 0.0022 0.22</size></box></geometry>
+        </collision>
+        <visual name="aruco_id5">
+          <pose>0.0 -0.0044 1.54 0 0 0</pose>
+          <geometry><box><size>0.22 0.0022 0.22</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr><metal><albedo_map>model://materials/textures/aruco_marker_5.jpg</albedo_map><roughness>0.5</roughness></metal></pbr>
+          </material>
+        </visual>
+
+        <collision name="aruco_id6_col">
+          <pose>0.0 -0.0044 1.98 0 0 0</pose>
+          <geometry><box><size>0.22 0.0022 0.22</size></box></geometry>
+        </collision>
+        <visual name="aruco_id6">
+          <pose>0.0 -0.0044 1.98 0 0 0</pose>
+          <geometry><box><size>0.22 0.0022 0.22</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr><metal><albedo_map>model://materials/textures/aruco_marker_6.jpg</albedo_map><roughness>0.5</roughness></metal></pbr>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+    <model name="takeoff_platform">
+      <static>true</static>
+      <pose>-4.4 -14.3 0.055 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>1.1 1.1 0.11</size></box></geometry></collision>
+        <visual name="v_base">
+          <geometry><box><size>1.1 1.1 0.11</size></box></geometry>
+          <material><ambient>0.20 0.20 0.20 1</ambient><diffuse>0.20 0.20 0.20 1</diffuse></material>
+        </visual>
+        
+        <collision name="aruco_id0_col">
+          <pose>0.0 0.0 0.0572 0 0 1.5708</pose> <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+        </collision>
+        <visual name="aruco_id0">
+          <pose>0.0 0.0 0.0572 0 0 1.5708</pose> <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/aruco_marker_0.jpg</albedo_map>
+                <roughness>0.5</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="platform_1">
+      <static>true</static>
+      <pose>-4.4 7.15 0.055 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>1.1 1.1 0.11</size></box></geometry></collision>
+        <visual name="v_base">
+          <geometry><box><size>1.1 1.1 0.11</size></box></geometry>
+          <material><ambient>0.20 0.20 0.20 1</ambient><diffuse>0.20 0.20 0.20 1</diffuse></material>
+        </visual>
+        
+        <collision name="aruco_id0_col">
+          <pose>0.0 0.0 0.0572 0 0 1.5708</pose> <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+        </collision>
+        <visual name="aruco_id0">
+          <pose>0.0 0.0 0.0572 0 0 1.5708</pose> <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/aruco_marker_2.jpg</albedo_map>
+                <roughness>0.5</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="platform_2">
+      <static>true</static>
+      <pose>4.4 7.15 0.055 0 0 3.1416</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>1.1 1.1 0.11</size></box></geometry></collision>
+        <visual name="v_base">
+          <geometry><box><size>1.1 1.1 0.11</size></box></geometry>
+          <material><ambient>0.20 0.20 0.20 1</ambient><diffuse>0.20 0.20 0.20 1</diffuse></material>
+        </visual>
+        
+        <collision name="aruco_id0_col">
+          <pose>0.0 0.0 0.0572 0 0 1.5708</pose> <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+        </collision>
+        <visual name="aruco_id0">
+          <pose>0.0 0.0 0.0572 0 0 1.5708</pose> <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/aruco_marker_3.jpg</albedo_map>
+                <roughness>0.5</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="landing_platform">
+      <static>false</static>
+      
+      <link name="carriage">
+        <pose>5.5 -14.3 0.22 0 0 0</pose>
+        <inertial>
+          <mass>4.0</mass>
+          <inertia><ixx>0.1</ixx><iyy>0.1</iyy><izz>0.1</izz></inertia>
+        </inertial>
+      </link>
+
+      <joint name="stroke_joint" type="prismatic">
+        <parent>world</parent>
+        <child>carriage</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.22</lower>
+            <upper>2.42</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0.5</spring_reference>
+            <spring_stiffness>12.5</spring_stiffness>
+            <damping>0.0</damping>
+            <friction>0.0</friction>
+          </dynamics>
+        </axis>
+      </joint>
+
+      <link name="base_link">
+        <pose>5.5 -14.3 0.22 0.2618 0 0</pose>
+        <inertial>
+          <mass>1.0</mass>
+          <inertia><ixx>0.1</ixx><iyy>0.1</iyy><izz>0.1</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+        </inertial>
+        
+        <collision name="col">
+          <geometry><box><size>1.1 1.1 0.11</size></box></geometry>
+        </collision>
+        
+        <visual name="vis_base">
+          <geometry><box><size>1.1 1.1 0.11</size></box></geometry>
+          <material><ambient>0.12 0.60 0.12 1</ambient><diffuse>0.12 0.60 0.12 1</diffuse></material>
+        </visual>
+        
+        <collision name="aruco_id1_col">
+          <pose>0.0 0.0 0.0572 0 0 -1.5708</pose>
+          <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+        </collision>
+        <visual name="aruco_id1">
+          <pose>0.0 0.0 0.0572 0 0 -1.5708</pose>
+          <geometry><box><size>0.88 0.88 0.0022</size></box></geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0 1.0</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://materials/textures/aruco_marker_1.jpg</albedo_map>
+                <roughness>0.5</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+
+      <joint name="pitch_joint" type="revolute">
+        <parent>carriage</parent>
+        <child>base_link</child>
+        <axis>
+          <xyz>1 0 0</xyz> <limit>
+            <lower>-1.151</lower>
+            <upper>0.0</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>-0.2618</spring_reference>
+            <spring_stiffness>0.125</spring_stiffness>
+            <damping>0.0</damping>
+            <friction>0.0</friction>
+          </dynamics>
+        </axis>
+      </joint>
+    </model>
+
+    <include>
+      <name>baby_doll_1</name>
+      <pose>-3.96 13.64 0.044 0 0 -0.5</pose>
+      <uri>model://models/MODERN_DOLL_FAMILY</uri> </include>
+
+    <include>
+      <name>baby_doll_2</name>
+      <pose>-5.72 11.44 0.044 0 0 1.2</pose>
+      <uri>model://models/MODERN_DOLL_FAMILY</uri> </include>
+
+    <include>
+      <name>baby_doll_3</name>
+      <pose>-7.26 11.0 0.044 0 0 1.2</pose>
+      <uri>model://models/MODERN_DOLL_FAMILY</uri> </include>
+
+  </world>
+</sdf>

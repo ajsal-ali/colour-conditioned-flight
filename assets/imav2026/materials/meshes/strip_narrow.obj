@@ -1,0 +1,19 @@
+# strip_narrow.obj
+# Vertices (0.6m x 10.5m)
+v -0.3 -5.25 0.0
+v  0.3 -5.25 0.0
+v -0.3  5.25 0.0
+v  0.3  5.25 0.0
+
+# UV coordinates (Tiling scale)
+vt 0.0 0.0
+vt 0.6 0.0
+vt 0.0 10.5
+vt 0.6 10.5
+
+# Normals (Pointing straight up)
+vn 0.0 0.0 1.0
+
+# Faces (Two triangles making a rectangle)
+f 1/1/1 2/2/1 3/3/1
+f 3/3/1 2/2/1 4/4/1

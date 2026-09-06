@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mj-drones-gym"
+version = "1.0.0"
+description = "MuJoCo-based multi-drone Gymnasium environments for single and multi-agent RL"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = [
+    "gymnasium>=0.29.0",
+    "mujoco>=3.0.0",
+    "numpy>=1.21.0",
+]
+
+[project.optional-dependencies]
+rl = ["stable-baselines3>=2.0.0"]
+marl = ["pettingzoo>=1.24.0"]
+viz = ["matplotlib>=3.5.0"]
+gpu = ["jax[cuda12]", "mujoco-mjx>=3.0.0"]
+# mavrl needs torch declared explicitly -- it arrived transitively via
+# stable-baselines3 before, which meant nothing pinned it.
+mavrl = [
+    "torch>=2.0.0",
+    "stable-baselines3>=2.0.0",
+    "matplotlib>=3.5.0",
+    "imageio>=2.31.0",
+    "imageio-ffmpeg>=0.4.9",
+    "tqdm>=4.65.0",
+]
+# GUI extras: only mavrl.teleop and `collect --gui` need these, and both need a
+# display. Headless training on Modal must not pull them in.
+mavrl-gui = [
+    "pygame>=2.5.0",
+]
+all = [
+    "stable-baselines3>=2.0.0",
+    "pettingzoo>=1.24.0",
+    "matplotlib>=3.5.0",
+    "Pillow>=9.0.0",
+    "jax[cuda12]",
+    "mujoco-mjx>=3.0.0",
+]
+dev = [
+    "pytest>=7.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["multi_drone_mujoco*", "mavrl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["multi_drone_mujoco/tests", "tests"]
