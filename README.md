@@ -6,13 +6,8 @@ alone. The observation carries no gate poses, waypoints, or other privileged
 geometry: the drone has to read the course from the camera and retain what it
 saw once that geometry leaves the field of view.
 
-**Status: training has not converged.** The encoder and memory stages are
-trained and behave as intended; the policy currently clears the full three-bar
-course about 30% of the time. See [Results](#results) for the numbers and the
-known cause.
-
 Demo (third-person view; top-right inset is the onboard RGB the encoder
-receives). This is a successful episode -- at present roughly one run in three:
+receives):
 
 ![Course demo](media/course_flight.gif)
 
