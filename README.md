@@ -106,8 +106,9 @@ from behaviour cloning with a decaying scripted-pilot mix.
 
 ![Training curves](results/course_35M/curves.png)
 
-Full logs for this and two earlier runs are in [`results/`](results/) -- one
-JSON object per rollout, so every number above is checkable.
+The full log is in [`results/`](results/) -- one JSON object per rollout, so
+every number above is checkable -- alongside the SeVAE, memory and policy
+weights.
 
 Two caveats, both load-bearing.
 

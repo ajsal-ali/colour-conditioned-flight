@@ -28,8 +28,9 @@ python -m mavrl.glcheck   # must say GPU, not llvmpipe
 
 ## 2. Pipeline (in order)
 
-No trained weights ship with this repo -- `ckpt/` and `runs/` are produced by
-the pipeline below.
+Trained SeVAE, memory and policy weights ship with the repo -- see
+[`results/README.md`](../results/README.md). The pipeline below is how they
+were produced.
 
 ```bash
 conda activate rl_mujoco
