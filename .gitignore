@@ -5,7 +5,7 @@ __pycache__/
 MUJOCO_LOG.TXT
 
 # training artefacts
-ckpt/
+ckpt/*
 runs/
 runs2/
 preview/
@@ -15,6 +15,12 @@ data_*/
 *.pt
 *.npz
 *.mp4
+
+# ...except the released weights (must follow *.pt: last match wins)
+!ckpt/sevae.pt
+!ckpt/memory_attention_m4.pt
+!results/course_35M/ckpt_8320000.pt
+!results/course_35M/ckpt_9600000.pt
 
 # renderer scratch
 .mj_png_cache/
