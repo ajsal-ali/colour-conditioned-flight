@@ -104,6 +104,11 @@ from behaviour cloning with a decaying scripted-pilot mix.
 | Mean gates cleared | 0.67 of the course |
 | Dominant failures | collision (~38% of episodes), wrong side of a bar (~20%) |
 
+![Training curves](results/course_35M/curves.png)
+
+Full logs for this and two earlier runs are in [`results/`](results/) -- one
+JSON object per rollout, so every number above is checkable.
+
 Two caveats, both load-bearing.
 
 **This is measured on the training height split.** The held-out-height
