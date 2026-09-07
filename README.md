@@ -87,44 +87,6 @@ pilot under a self-imitation learning (SIL) objective, so good expert
 transitions reinforce the policy without staying on forever. The course
 curriculum grows from entry-to-exit only up to the full three-bar course.
 
-## Results
-
-Reported from the longest PPO run to date: 35.7M environment steps at stage 3
-(the full three-bar course), attention memory with four tokens, warm-started
-from behaviour cloning with a decaying scripted-pilot mix.
-
-| Metric | Value |
-|---|---|
-| Success (all gates cleared) | 0.29 |
-| Mean gates cleared | 0.67 of the course |
-| Dominant failures | collision (~38% of episodes), wrong side of a bar (~20%) |
-
-![Training curves](results/course_35M/curves.png)
-
-The full log is in [`results/`](results/) -- one JSON object per rollout, so
-every number above is checkable -- alongside the SeVAE, memory and policy
-weights.
-
-Two caveats, both load-bearing.
-
-**This is measured on the training height split.** The held-out-height
-evaluation that `evaluate.py` implements -- the test of whether the policy
-learned "red means above" or memorised four bar heights -- has not been run on a
-converged model, so no generalization number is claimed here.
-
-**The run is not clean.** Policy entropy climbs monotonically from -4.4 to
-+16.4 across the run, which for a 4-D diagonal Gaussian is a standard deviation
-around 14 against an action space clipped to +/-1. The entropy bonus is buying
-entropy in a region the environment cannot observe, so the sampled policy over
-the later half of the run is close to bang-bang. The fix is a squashed (tanh)
-Gaussian with the log-determinant correction, or a bounded `log_std`; until that
-lands, the number above is a floor from a misbehaving run rather than the
-method's ceiling.
-
-Built but unrun: the memory ablation (`--memory-type` over none / LSTM /
-attention, `--mem-tokens` for the token count), the depth-only-vs-SeVAE
-comparison, and multi-seed evaluation with confidence intervals.
-
 ## Relation to MAVRL
 
 MAVRL demonstrated memory-augmented latent flight in unstructured clutter from
@@ -163,6 +125,17 @@ Install and run instructions live in [`mavrl/README.md`](mavrl/README.md).
 Policy training ran on ParamShakti (IIT Kharagpur HPC) with EGL headless
 rendering. Parallel environments share GL contexts across render workers so
 VRAM scales with the number of contexts rather than the number of envs.
+
+## Current results
+
+The longest run to date is 35.7M steps on the full three-bar course: 0.29
+success, 0.67 of the gates cleared on average. Training is ongoing. Policy
+entropy diverges in the later half of that run -- the entropy bonus inflates
+`log_std` against a clipped action space -- so the figure is a floor rather than
+what the method settles at.
+
+[`results/`](results/) has the per-rollout log, the training curves, and the
+SeVAE, memory and policy weights.
 
 ## References
 
