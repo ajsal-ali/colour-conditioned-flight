@@ -49,12 +49,20 @@ previous action). The action is body-frame acceleration (3) plus a yaw rate
 
 ### Semantic VAE
 
+The semantically-enhanced VAE is Kulkarni et al.'s idea (arXiv:2307.11522):
+attaching a segmentation objective to a compression autoencoder so that
+semantically important but visually small structure -- in their case thin
+obstacles a plain reconstruction loss would smooth away -- survives into the
+latent. The same failure applies here for a different reason. A bar occupies
+1-4% of the frame, and its colour, not its geometry, decides which side is
+legal, so a purely unsupervised reconstruction loss has little reason to
+preserve the one property the task depends on.
+
 A six-convolution encoder maps each RGB-D frame to a 64-D latent. Three decoder
 heads reconstruct RGB, depth, and a semantic segmentation map. The
 reconstruction loss is proximity-weighted so near geometry (what the drone can
 hit) dominates capacity. The segmentation head is what keeps red and blue
-separable in the latent; without it, an unsupervised reconstruction loss has
-little reason to preserve the colour that defines the legal path.
+separable in the latent.
 
 ![SeVAE reconstructions](media/sevae_samples.png)
 
@@ -64,10 +72,30 @@ reconstruction, then depth and segmentation targets against predictions.
 ### Temporal attention with four memory tokens
 
 The deployed memory is windowed temporal attention with four recurrent memory
-tokens (RMT-style; cf. Bulatov et al., 2022). During memory training an
-auxiliary head must reconstruct the image from about two seconds earlier as
-well as the current one. The attention window is shorter than that offset, so
-the past frame is not sitting in the buffer and must be carried in the tokens.
+tokens (RMT-style; cf. Bulatov et al., 2022). MAVRL uses an LSTM here; the
+choice of attention is motivated by the shape of this task.
+
+What the drone has to recall is not a summary of the last few seconds but one
+specific earlier view: the frame in which the upcoming bar's colour was legible,
+before the approach pushed it out of the vertical field of view. An LSTM folds
+every frame into a single hidden vector that is overwritten at each step, so
+retrieving one particular past observation competes with everything else the
+state is holding. Attention over a window of latents leaves those frames
+individually addressable, which is closer to the operation the task actually
+needs.
+
+A bare window is hard-capped at its length, though, which would make it strictly
+weaker than a recurrent state rather than a different trade-off. The four memory
+tokens are what close that gap: their output at step t is their input at t+1, so
+memory extends past the window while attention keeps sharp access inside it.
+
+During memory training an auxiliary head must reconstruct the image from about
+two seconds earlier as well as the current one. The attention window is shorter
+than that offset, so the past frame is not sitting in the buffer and must be
+carried in the tokens -- otherwise the objective could be satisfied by copying
+rather than remembering, and only the LSTM would face a real memory task.
+
+Both backbones are implemented behind `--memory-type`.
 
 ![Memory reconstructions](media/memory_attention_m4_samples.png)
 
@@ -94,10 +122,11 @@ depth. This project keeps that overall recipe and changes the parts the colour
 course requires.
 
 The task is a structured arena with an explicit colour rule rather than random
-obstacles, so the encoder takes RGB-D instead of depth alone and adds a
-segmentation head with proximity-weighted reconstruction (SeVAE). Memory is
-temporal attention with four recurrent tokens rather than an LSTM (LSTM remains
-as an ablation). Speed variation appears through curriculum and progress /
+obstacles, so the encoder takes RGB-D instead of depth alone and carries the
+segmentation head of Kulkarni et al.'s SeVAE, here supervising colour rather
+than thin-obstacle geometry, with proximity-weighted reconstruction. Memory is
+temporal attention with four recurrent tokens rather than an LSTM. Speed
+variation appears through curriculum and progress /
 overspeed shaping on a fixed corridor instead of MAVRL's explicit
 varying-speed objective. Data for the encoder and warm-start come from a
 scripted pilot (and optional teleop), with an optional pilot mix inside PPO,
@@ -141,6 +170,9 @@ SeVAE, memory and policy weights.
 
 - Yu, Ferranti, et al. *MAVRL: Learn to Fly in Cluttered Environments with
   Varying Speed.* IEEE RA-L 2025. https://github.com/tudelft/mavrl
+- Kulkarni, Nguyen, Alexis. *Semantically-enhanced Deep Collision Prediction
+  for Autonomous Navigation using Aerial Robots.* IROS 2023.
+  https://arxiv.org/abs/2307.11522
 - Bulatov, Kuratov, Burtsev. *Recurrent Memory Transformer.* NeurIPS 2022.
 - Tayal. *MuJoCo-Drones-Gym.* arXiv:2606.08039, 2026.
   https://arxiv.org/abs/2606.08039

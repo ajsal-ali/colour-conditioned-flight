@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """Semantically-enhanced VAE.
 
-The paper's VAE is depth-only, reconstruction-weighted uniformly. Two changes
-here, both deliberate:
+The semantic head is Kulkarni, Nguyen and Alexis, "Semantically-enhanced Deep
+Collision Prediction for Autonomous Navigation using Aerial Robots" (IROS 2023,
+arXiv:2307.11522), where it preserves thin obstacles that a plain reconstruction
+loss smooths away. Here it preserves bar colour instead: same problem shape --
+a few percent of the pixels carry the information the task turns on -- with the
+salient property being semantic rather than geometric.
+
+MAVRL's VAE is depth-only, reconstruction-weighted uniformly. Two changes here,
+both deliberate:
 
 1. **RGB-D input.** Colour is load-bearing on this course -- a red bar means fly
    above, a blue bar means fly below, and depth alone cannot tell them apart.
