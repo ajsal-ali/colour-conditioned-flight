@@ -155,16 +155,8 @@ Policy training ran on ParamShakti (IIT Kharagpur HPC) with EGL headless
 rendering. Parallel environments share GL contexts across render workers so
 VRAM scales with the number of contexts rather than the number of envs.
 
-## Current results
-
-The longest run to date is 35.7M steps on the full three-bar course: 0.29
-success, 0.67 of the gates cleared on average. Training is ongoing. Policy
-entropy diverges in the later half of that run -- the entropy bonus inflates
-`log_std` against a clipped action space -- so the figure is a floor rather than
-what the method settles at.
-
-[`results/`](results/) has the per-rollout log, the training curves, and the
-SeVAE, memory and policy weights.
+Training is ongoing. [`results/`](results/) holds the per-rollout logs, the
+training curves, and the SeVAE, memory and policy weights.
 
 ## References
 
