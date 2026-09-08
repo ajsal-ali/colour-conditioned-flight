@@ -53,11 +53,8 @@ A six-convolution encoder maps each RGB-D frame to a 64-D latent. Three decoder
 heads reconstruct RGB, depth, and a semantic segmentation map. The
 semantically-enhanced VAE is from Kulkarni et al. (IROS 2023, arXiv:2307.11522).
 
-The reconstruction loss is proximity-weighted, so near geometry -- what the
-drone can hit -- dominates the latent's capacity. The segmentation head is what
-keeps red and blue separable; its cross-entropy is deliberately not
-proximity-weighted, since the next station's colour has to be read while it is
-still far away.
+The reconstruction loss is proximity-weighted, so near geometry dominates the
+latent's capacity, giving the VAE a better representation of nearby obstacles.
 
 ![SeVAE reconstructions](media/sevae_samples.png)
 
