@@ -49,20 +49,29 @@ previous action). The action is body-frame acceleration (3) plus a yaw rate
 
 ### Semantic VAE
 
-The semantically-enhanced VAE is Kulkarni et al.'s idea (arXiv:2307.11522):
-attaching a segmentation objective to a compression autoencoder so that
-semantically important but visually small structure -- in their case thin
-obstacles a plain reconstruction loss would smooth away -- survives into the
-latent. The same failure applies here for a different reason. A bar occupies
-1-4% of the frame, and its colour, not its geometry, decides which side is
-legal, so a purely unsupervised reconstruction loss has little reason to
-preserve the one property the task depends on.
+The semantically-enhanced VAE comes from Kulkarni et al. (IROS 2023,
+arXiv:2307.11522). Their observation is that a plain reconstruction loss
+compresses away exactly what a flying robot most needs: thin obstacles occupy
+few pixels, so smoothing them out barely costs the loss anything. Their fix is
+to weight the reconstruction loss per pixel using semantic labels, so that small
+instances count for more than their pixel share.
 
-A six-convolution encoder maps each RGB-D frame to a 64-D latent. Three decoder
-heads reconstruct RGB, depth, and a semantic segmentation map. The
-reconstruction loss is proximity-weighted so near geometry (what the drone can
-hit) dominates capacity. The segmentation head is what keeps red and blue
-separable in the latent.
+This project keeps that idea -- the compression objective has to be told what
+matters -- and changes what "matters" means, twice.
+
+The weight here is **proximity**, not instance size: it comes from the depth
+channel, so the nearest surfaces dominate the loss and the latent spends its
+capacity on the geometry the drone can actually hit.
+
+And the property worth preserving is **colour**, not thin structure, since red
+means pass above and blue means pass below. Depth cannot distinguish the two,
+and no reconstruction weighting can teach the difference, so that is carried by
+a third decoder head predicting a semantic segmentation map. Its cross-entropy
+is deliberately not proximity-weighted -- the next station's colour has to be
+read while it is still far away.
+
+A six-convolution encoder maps each RGB-D frame to a 64-D latent, and three
+decoder heads reconstruct RGB, depth, and the segmentation map.
 
 ![SeVAE reconstructions](media/sevae_samples.png)
 
@@ -122,12 +131,13 @@ depth. This project keeps that overall recipe and changes the parts the colour
 course requires.
 
 The task is a structured arena with an explicit colour rule rather than random
-obstacles, so the encoder takes RGB-D instead of depth alone and carries the
-segmentation head of Kulkarni et al.'s SeVAE, here supervising colour rather
-than thin-obstacle geometry, with proximity-weighted reconstruction. Memory is
-temporal attention with four recurrent tokens rather than an LSTM. Speed
-variation appears through curriculum and progress /
-overspeed shaping on a fixed corridor instead of MAVRL's explicit
+obstacles, so the encoder takes RGB-D instead of depth alone and borrows the
+semantically-enhanced VAE of Kulkarni et al., with both of its terms retargeted:
+the reconstruction weight is keyed to proximity rather than instance size, and
+the semantics are carried by a segmentation head supervising colour rather than
+used to weight thin-obstacle pixels. Memory is temporal attention with four
+recurrent tokens rather than an LSTM. Speed variation appears through curriculum
+and progress / overspeed shaping on a fixed corridor instead of MAVRL's explicit
 varying-speed objective. Data for the encoder and warm-start come from a
 scripted pilot (and optional teleop), with an optional pilot mix inside PPO,
 rather than from online policy rollouts alone. Simulation is the MuJoCo
