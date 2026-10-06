@@ -107,6 +107,30 @@ pilot under a self-imitation learning (SIL) objective, so good expert
 transitions reinforce the policy without staying on forever. The course
 curriculum grows from entry-to-exit only up to the full three-bar course.
 
+## Results
+
+The full three-bar course, 20.8M environment steps:
+
+| | |
+|---|---|
+| **Success** (every gate cleared, correct side) | **0.905 ± 0.027** |
+| Collision | 6% of episodes |
+| Wrong side of a bar | 4% |
+| Mean completed lap | 12.5 s |
+| Average ground velocity | 0.63 m/s |
+| Heading error | 6.5° |
+
+![Training curves](media/training_curves.png)
+
+Averaged over the last 200 rollouts, about 20,600 episodes, on the training
+height split. The run is clean throughout: policy entropy sits on its floor
+rather than drifting, approximate KL holds at 0.023 against a 0.03 trust region,
+and the scripted-pilot mix has decayed to zero by 1.5M steps, so everything
+after that is the policy flying on its own.
+
+The per-rollout log, the training curves and the policy weights are in
+[`results/`](results/).
+
 ## Relation to MAVRL
 
 MAVRL demonstrated memory-augmented latent flight in unstructured clutter from

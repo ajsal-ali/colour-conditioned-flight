@@ -19,6 +19,7 @@ data_*/
 # ...except the released weights (must follow *.pt: last match wins)
 !ckpt/sevae.pt
 !ckpt/memory_attention_m4.pt
+!results/course_21M/ckpt_best.pt
 !results/course_35M/ckpt_8320000.pt
 !results/course_35M/ckpt_9600000.pt
 
