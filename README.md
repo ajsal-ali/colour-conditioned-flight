@@ -6,8 +6,9 @@ alone. The observation carries no gate poses, waypoints, or other privileged
 geometry: the drone has to read the course from the camera and retain what it
 saw once that geometry leaves the field of view.
 
-Demo (third-person view; top-right inset is the onboard RGB the encoder
-receives):
+Ten consecutive courses, each a freshly drawn layout -- bar colours, heights and
+spacing all resampled. Third-person view; the top-right inset is the onboard
+RGB-D the encoder actually receives:
 
 ![Course demo](media/course_flight.gif)
 
