@@ -175,8 +175,9 @@ training curves, and the SeVAE, memory and policy weights.
 
 ## References
 
-- Yu, Ferranti, et al. *MAVRL: Learn to Fly in Cluttered Environments with
-  Varying Speed.* IEEE RA-L 2025. https://github.com/tudelft/mavrl
+- Hang Yu, Christophe De Wagter, Guido C. H. E. de Croon. *MAVRL: Learn to Fly
+  in Cluttered Environments with Varying Speed.* IEEE RA-L 2025.
+  https://github.com/tudelft/mavrl
 - Kulkarni, Nguyen, Alexis. *Semantically-enhanced Deep Collision Prediction
   for Autonomous Navigation using Aerial Robots.* IROS 2023.
   https://arxiv.org/abs/2307.11522
